@@ -6,7 +6,7 @@ export default function Home() {
     <main>
       <Header />
       
-      <h1>trello-personal-clone</h1>
+      <h1 className="flex justify-center p-5">trello-personal-clone</h1>
       
       
       {/* Board */}
