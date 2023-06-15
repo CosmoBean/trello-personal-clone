@@ -6,7 +6,25 @@ import Avatar from "react-avatar"
 function Header() {
   return (
     <header>
+    
         <div className="flex flex-col md:flex-row items-center p-5 bg-gray-500/10 rounded-b-2xl">
+        <div 
+            className="
+            absolute
+            top-0
+            left-0
+            w-full
+            h-96
+            bg-gradient-to-br
+            from-[#0055D1]
+            to-pink-400
+            rounded-md
+            filter
+            opacity-50
+            blur-3xl
+            -z-50
+            "
+        />
         <Image 
         src={"https://github.com/CosmoBean/image-assets/blob/master/personal-trello-clone/Trello_logo.png?raw=true"}
         alt="Trello Logo"
