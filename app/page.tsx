@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import '@/app/globals.css'
+import Board from "@/components/Board";
 
 export default function Home() {
   return (
@@ -7,9 +8,7 @@ export default function Home() {
       <Header />
       
       <h1 className="flex justify-center p-5">trello-personal-clone</h1>
-      
-      
-      {/* Board */}
+      <Board />
     </main>
   )
 }
