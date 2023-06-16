@@ -3,7 +3,16 @@
 import Image from "next/image"
 import {MagnifyingGlassIcon, UserCircleIcon} from "@heroicons/react/24/solid"
 import Avatar from "react-avatar"
+import { useBoardStore } from "@/store/BoardStore";
+import { ChangeEvent } from "react";
+
 function Header() {
+  const [searchString, setSearchString] = useBoardStore((state)=> [state.searchString, state.setSearchString]);
+
+  const handleSearchTermChange = (e:ChangeEvent<HTMLInputElement>)=>{
+    setSearchString(e.target.value)
+  };
+
   return (
     <header>
     
@@ -36,7 +45,7 @@ function Header() {
     <div className="flex items-center space-x-5 flex-1 justify-end w-full">
         <form className="flex items-center space-x-5 bg-white rounded-md p-2 shadow-md flex-1 md:flex-initial">
             <MagnifyingGlassIcon className="h-6 w-6 text-gray-600"/>
-            <input type="text" placeholder="Search" className="flex-1 outline-none p-2"/>
+            <input type="text" value={searchString} placeholder="Search" className="flex-1 outline-none p-2" onChange={(e)=>handleSearchTermChange(e)}/>
             <button type="submit" hidden>Search</button>
         </form>
 

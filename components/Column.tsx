@@ -2,6 +2,7 @@
 import { PlusCircleIcon } from "@heroicons/react/24/solid"
 import { Draggable, Droppable } from "react-beautiful-dnd"
 import TodoCard from "./TodoCard"
+import { useBoardStore } from "@/store/BoardStore"
 type ColumnProps = {
     id: TypedColumns,
     todos: Todo[],
@@ -16,6 +17,8 @@ const idToColumnText: {
     "done": "Done"
 }
 function Column({id, todos, index}: ColumnProps) {
+    //apply debounce on search term!
+    const [searchString] = useBoardStore((state)=>(state.searchString))
   return (
     <Draggable draggableId={id} index={index}>
         {(provided) => (
@@ -34,11 +37,22 @@ function Column({id, todos, index}: ColumnProps) {
                         >
                             <h2 className="flex justify-between font-bold text-xl p-2">
                                 {idToColumnText[id]}
-                                <span className="text-gray-500 bg-gray-200 rounded-full px-2 py-1 text-sm font-normal">{todos.length}</span>
+                                <span className="text-gray-500 bg-gray-200 rounded-full px-2 py-1 text-sm font-normal">
+                                    {!searchString ? todos.length :todos.filter(todo=>todo.title.toLowerCase().includes(searchString.toLowerCase())).length}
+                                </span>
                             </h2>
 
                             <div className="space-y-2">
-                                {todos.map((todo,index) => (
+                                {todos.map((todo,index) => {
+                                    
+                                    if(searchString && 
+                                        !todo.title.
+                                        toLowerCase().
+                                        includes(searchString.toLowerCase())
+                                        )
+                                            return null;
+                                    
+                                    return(
                                     <Draggable
                                         key={todo.$id}
                                         draggableId={todo.$id}
@@ -56,7 +70,7 @@ function Column({id, todos, index}: ColumnProps) {
                                         )}
                                     </Draggable>
 
-                                ))}
+                                )})}
                                 {provided.placeholder}
 
                                 <div className="flex items-end justify-end">

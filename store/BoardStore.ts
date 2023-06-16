@@ -7,6 +7,8 @@ export interface BoardState {
     getBoard: ()=>void
     setBoardState: (board:Board)=>void
     updateTodoInDB: (todo:Todo, columnId: TypedColumns)=>void
+    searchString: string;
+    setSearchString: (searchString:string)=>void
 
 }
 
@@ -34,6 +36,11 @@ export const useBoardStore = create<BoardState>((set) => ({
         status: columnId,
       }
     );
+  },
+  searchString:'',
+  
+  setSearchString: (searchString:string)=>{
+    set({searchString});
   }
 }))
 
