@@ -20,7 +20,8 @@ function Board() {
         entries.splice(destination.index, 0, removed);
         const rearrangedColumns = new Map(entries);
         setBoardState({...board, columns:rearrangedColumns})
-      };
+        return;
+      }; 
        // Handle card drag
       // This step is needed as the indexes are stored as numbers 0,1,2 etc. instead of id's with DND library
       const columns = Array.from(board.columns)
