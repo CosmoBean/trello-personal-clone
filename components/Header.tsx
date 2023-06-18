@@ -4,14 +4,32 @@ import Image from "next/image"
 import {MagnifyingGlassIcon, UserCircleIcon} from "@heroicons/react/24/solid"
 import Avatar from "react-avatar"
 import { useBoardStore } from "@/store/BoardStore";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import { fetchSuggestionHelper } from "@/utils/fetchSuggestionHelper";
 
 function Header() {
-  const [searchString, setSearchString] = useBoardStore((state)=> [state.searchString, state.setSearchString]);
+  const [searchString, setSearchString, board] = useBoardStore((state)=> [state.searchString, state.setSearchString, state.board]);
 
   const handleSearchTermChange = (e:ChangeEvent<HTMLInputElement>)=>{
     setSearchString(e.target.value)
   };
+
+  const [loading, setLoading] = useState<Boolean>(false);
+  const [suggestion, setSuggestion] = useState<string>("");
+
+  useEffect(()=>{
+    if (board.columns.size === 0) return;
+    setLoading(true);
+
+    const fetchSuggestion = async () => {
+      const suggestion = await fetchSuggestionHelper(board);
+      setSuggestion(suggestion);
+      setLoading(false);
+    }
+
+    fetchSuggestion();
+
+  },[board])
 
   return (
     <header>
@@ -56,8 +74,10 @@ function Header() {
 
     <div className="flex items-center justify-center px-5 py-2 md:py-5">
       <p className="flex items-center p-5 pr-5 text-sm font-light shadow-xl rounded-xl w-fit bg-white italic max-w-3xl text-[#0055D1]">
-        <UserCircleIcon color="#0055D1" className="inline-block h-10 w-10 mr-1" />
-        Please wait, as we summarize your tasks for the day....
+        <UserCircleIcon color="#0055D1" className={`inline-block h-10 w-10 text-[#0055D1] mr-1 ${loading && "animate-spin"}`} />
+        {suggestion && !loading
+        ? suggestion
+        :"Please wait, as we summarize your tasks for the day...."}
       </p>
     </div>
     </header>
