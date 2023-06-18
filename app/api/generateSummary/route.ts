@@ -5,7 +5,6 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const { todos } = await request.json()
-  console.log(todos)
 
   const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
@@ -15,7 +14,7 @@ export async function POST(request: Request) {
     messages:[
         {
             role:"system",
-            content: "When responding, welcome the user always as Trello-ist, and say welcome to The Personal Trello App!. Limit the response to 200 Characters"
+            content: "When responding, welcome the user always as CosmoBean, and say welcome to The Personal Trello App!. Limit the response to 200 Characters"
         },
         {
             role:"user",

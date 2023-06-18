@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains : ["github.com"] //for image assets
+        domains : ["github.com", "cloud.appwrite.io"] //for image assets
     }
 }
 

@@ -3,6 +3,7 @@ import { PlusCircleIcon } from "@heroicons/react/24/solid"
 import { Draggable, Droppable } from "react-beautiful-dnd"
 import TodoCard from "./TodoCard"
 import { useBoardStore } from "@/store/BoardStore"
+import { useModalStore } from "@/store/ModalStore"
 type ColumnProps = {
     id: TypedColumns,
     todos: Todo[],
@@ -18,7 +19,13 @@ const idToColumnText: {
 }
 function Column({id, todos, index}: ColumnProps) {
     //apply debounce on search term!
-    const [searchString] = useBoardStore((state)=>(state.searchString))
+    const [searchString, setNewTaskType] = useBoardStore((state)=>[state.searchString, state.setNewTaskType]);
+    const [openModal] = useModalStore((state)=>[state.openModal]);
+
+    const handleAddTodo = ()=>{
+        setNewTaskType(id);
+        openModal();
+    }
   return (
     <Draggable draggableId={id} index={index}>
         {(provided) => (
@@ -74,7 +81,7 @@ function Column({id, todos, index}: ColumnProps) {
                                 {provided.placeholder}
 
                                 <div className="flex items-end justify-end">
-                                    <button className="text-green-500 hover:text-green-600">
+                                    <button className="text-green-500 hover:text-green-600" onClick={handleAddTodo}>
                                         <PlusCircleIcon className="h-10 w-10"/>
                                     </button>
                                 </div>

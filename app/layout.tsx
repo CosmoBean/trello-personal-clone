@@ -1,3 +1,4 @@
+import Modal from "@/components/Modal"
 
 export const metadata = {
   title: 'trello-personal-clone',
@@ -11,7 +12,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Modal />
+      </body>
     </html>
   )
 }
