@@ -1,28 +1,7 @@
-
-
-const formatTodosForAI = (board:Board) => {
-    const todos = Array.from(board.columns.entries());
-
-    const flatArray = todos.reduce((map, [key,value])=>{
-        map[key] = value.todos;
-        return map;
-    }, {} as { [key in TypedColumns]: Todo[] }
-    );
-
-    const flatArrayCounted = Object.entries(flatArray).reduce(
-        (map, [key, value]) => {
-            map[key as TypedColumns] = value.length;
-            return map;
-        },
-        {} as { [key in TypedColumns]: number }
-    );
-    return flatArrayCounted;
-}
-
-
+import { formatTodosHelper } from "./formatTodoHelper";
 
 export const fetchSuggestionHelper = async (board:Board) => {
-    const todos = formatTodosForAI(board)
+    const todos = formatTodosHelper(board)
 
     const response = await fetch("/api/generateSummary", {
         method: "POST",

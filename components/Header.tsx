@@ -6,6 +6,7 @@ import Avatar from "react-avatar"
 import { useBoardStore } from "@/store/BoardStore";
 import { ChangeEvent, useEffect, useState } from "react";
 import { fetchSuggestionHelper } from "@/utils/fetchSuggestionHelper";
+import { fetchSuggestionDummy } from "@/utils/fetchSuggestionDummy";
 
 function Header() {
   const [searchString, setSearchString, board] = useBoardStore((state)=> [state.searchString, state.setSearchString, state.board]);
@@ -22,7 +23,8 @@ function Header() {
     setLoading(true);
 
     const fetchSuggestion = async () => {
-      const suggestion = await fetchSuggestionHelper(board);
+      const suggestion = await fetchSuggestionDummy(board);
+      /* const suggestion = await fetchSuggestionHelper(board); //optional GPT api call */
       setSuggestion(suggestion);
       setLoading(false);
     }
