@@ -2,9 +2,13 @@
 'use client'
 import '@/app/globals.css'
 import Image from 'next/image'
-import Avatar from 'react-avatar'
-import { signIn } from 'next-auth/react'
+import {useSession, signIn } from 'next-auth/react'
+import { redirect } from 'next/navigation'
 const SignInPage = () => {
+  const {data: session} = useSession();
+  if (session) {
+    redirect('/board')
+  }
   return (
     <header>
     
