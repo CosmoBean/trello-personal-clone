@@ -7,8 +7,13 @@ import { useBoardStore } from "@/store/BoardStore";
 import { ChangeEvent, useEffect, useState } from "react";
 import { fetchSuggestionHelper } from "@/utils/fetchSuggestionHelper";
 import { fetchSuggestionDummy } from "@/utils/fetchSuggestionDummy";
+import { useSession, signOut } from "next-auth/react";
+import ProfileIcon from "./ProfileIcon";
 
 function Header() {
+  const {data : session} = useSession({
+    required: true,
+  });
   const [searchString, setSearchString, board] = useBoardStore((state)=> [state.searchString, state.setSearchString, state.board]);
 
   const handleSearchTermChange = (e:ChangeEvent<HTMLInputElement>)=>{
@@ -23,7 +28,7 @@ function Header() {
     setLoading(true);
 
     const fetchSuggestion = async () => {
-      const suggestion = await fetchSuggestionDummy(board);
+      const suggestion = await fetchSuggestionDummy(board, session?.user?.name!);
       /* const suggestion = await fetchSuggestionHelper(board); //optional GPT api call */
       setSuggestion(suggestion);
       setLoading(false);
@@ -69,14 +74,15 @@ function Header() {
             <button type="submit" hidden>Search</button>
         </form>
 
-        <Avatar name="Cosmo Bean" round size="50" color="#0055D1"/>
+        {/* <Avatar name={session?.user?.name!} round size="50" color="#0055D1"/> */}
+        <ProfileIcon />
 
     </div>
     </div>
 
     <div className="flex items-center justify-center px-5 py-2 md:py-5">
       <p className="flex items-center p-5 pr-5 text-sm font-light shadow-xl rounded-xl w-fit bg-white italic max-w-3xl text-[#0055D1]">
-        <UserCircleIcon color="#0055D1" className={`inline-block h-10 w-10 text-[#0055D1] mr-1 ${loading && "animate-spin"}`} />
+        <UserCircleIcon color="#0055D1" className={`inline-block h-10 w-10 text-[#0055D1] mr-1 ${loading && "animate-spin"}`} onClick={()=>{signOut()}} />
         {suggestion && !loading
         ? suggestion
         :"Please wait, as we summarize your tasks for the day...."}

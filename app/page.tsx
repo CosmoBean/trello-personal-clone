@@ -1,12 +1,14 @@
-import Header from "@/components/Header";
+"use client";
 import '@/app/globals.css'
-import Board from "@/components/Board";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <main>
-      <Header />
-      <Board />
-    </main>
-  )
+  const {data: session} = useSession();
+  if (session) {
+    redirect('/board')
+  }else {
+    redirect('/signin')
+  }
+  
 }

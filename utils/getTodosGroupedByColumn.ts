@@ -1,10 +1,14 @@
 "use client";
 import { databases } from "@/appwrite"
+import { Query } from "appwrite";
 
-export const getTodosGroupedByColumn  = async () => {
+export const getTodosGroupedByColumn  = async (userId:string) => {
     const data = await databases.listDocuments(
         process.env.NEXT_PUBLIC_DATABASE_ID!,
-        process.env.NEXT_PUBLIC_TODOS_COLLECTION_ID!
+        process.env.NEXT_PUBLIC_TODOS_COLLECTION_ID!,
+        [
+            Query.equal('userId', userId)
+        ]
     )
 
     const todos = data.documents;

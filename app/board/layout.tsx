@@ -1,3 +1,5 @@
+import Modal from "@/components/Modal"
+import ProfileIcon from "@/components/ProfileIcon"
 import Provider from "@/components/Provider"
 
 export const metadata = {
@@ -13,9 +15,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Provider>
           {children}
-        </Provider>
+          <Modal />
       </body>
     </html>
   )
