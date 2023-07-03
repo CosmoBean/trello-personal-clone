@@ -8,6 +8,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { fetchSuggestionHelper } from "@/utils/fetchSuggestionHelper";
 import { fetchSuggestionDummy } from "@/utils/fetchSuggestionDummy";
 import { useSession, signOut } from "next-auth/react";
+import ProfileIcon from "./ProfileIcon";
 
 function Header() {
   const {data : session} = useSession({
@@ -73,7 +74,8 @@ function Header() {
             <button type="submit" hidden>Search</button>
         </form>
 
-        <Avatar name={session?.user?.name!} round size="50" color="#0055D1"/>
+        {/* <Avatar name={session?.user?.name!} round size="50" color="#0055D1"/> */}
+        <ProfileIcon />
 
     </div>
     </div>

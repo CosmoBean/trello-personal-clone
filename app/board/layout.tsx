@@ -1,4 +1,5 @@
 import Modal from "@/components/Modal"
+import ProfileIcon from "@/components/ProfileIcon"
 import Provider from "@/components/Provider"
 
 export const metadata = {
