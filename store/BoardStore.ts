@@ -1,11 +1,12 @@
 import { ID, databases, storage } from '@/appwrite';
 import uploadImage from '@/utils/UploadImage';
 import { getTodosGroupedByColumn } from '@/utils/getTodosGroupedByColumn';
+import getUserId from '@/utils/getUserId';
 import { create } from 'zustand'
 
 export interface BoardState {
     board: Board;
-    getBoard: ()=>void
+    getBoard: ()=>void;
     setBoardState: (board:Board)=>void
     updateTodoInDB: (todo:Todo, columnId: TypedColumns)=>void
     searchString: string;
@@ -29,7 +30,8 @@ export const useBoardStore = create<BoardState>((set, get) => ({
   },
 
   getBoard: async ()=>{
-    const board = await getTodosGroupedByColumn()
+    const userId = await getUserId() as string;
+    const board = await getTodosGroupedByColumn(userId);
     set({board});
   },
 
@@ -80,7 +82,7 @@ export const useBoardStore = create<BoardState>((set, get) => ({
 
   addTask: async (todo: string, columnId: TypedColumns, image?:File|null)=>{
       let file: Image | undefined;
-
+      const userId = await getUserId() as string;
       if (image){
         const fileUploaded = await uploadImage(image);
         if (fileUploaded){
@@ -97,7 +99,8 @@ export const useBoardStore = create<BoardState>((set, get) => ({
         ID.unique(),
         {
           title: todo, 
-          status: columnId, 
+          status: columnId,
+          userId,
           //include image if exists
           ...(file && {image: JSON.stringify(file)}),
         }
