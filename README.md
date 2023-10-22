@@ -1,6 +1,6 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-This project is curretnly hosted on [https://trello-personal-clone.vercel.app](https://trello-personal-clone.vercel.app)
+This project is curretnly hosted on [https://todo.cosmobean.dev](https://todo.cosmobean.dev)
 
 # trello-personal-clone
 
