@@ -47,7 +47,7 @@ const SignInPage = () => {
           onClick={() => signIn('google')}
         >
           <Image
-            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+            src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
             alt="Google sign-in"
             height={200}
             width={300}
